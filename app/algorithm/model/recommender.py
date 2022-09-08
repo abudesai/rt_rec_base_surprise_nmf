@@ -19,12 +19,10 @@ MODEL_NAME = "recommender_base_nmf_surprise"
 
 model_fname = "model.save"
 model_params_fname = "model_params.save"
-model_wts_fname = "model_wts.save"
-history_fname = "history.json"
 
 
 class Recommender:
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.ma = None
         self.mi = None
         self.model = NMF()
@@ -104,6 +102,3 @@ def load_model(model_path):
     return model
 
 
-def save_training_history(history, f_path):
-    with open(os.path.join(f_path, history_fname), mode='w') as f:
-        f.write(json.dumps(history, indent=2))
