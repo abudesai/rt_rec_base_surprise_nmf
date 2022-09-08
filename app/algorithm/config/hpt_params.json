@@ -1,0 +1,18 @@
+[
+//  {
+//    "name": "K",
+//    "short_desc": "dimensionality of embedding - default 10",
+//    "default": 10,
+//    "type": "categorical",
+//    "categorical_vals": [5, 10, 20, 50, 100],
+//    "run_HPO": true
+//  },
+//  {
+//    "name": "batch_size",
+//    "short_desc": "Batch size for training",
+//    "default": 256,
+//    "type": "categorical",
+//    "categorical_vals": [128, 256, 512, 1025],
+//    "run_HPO": true
+//  }
+]
