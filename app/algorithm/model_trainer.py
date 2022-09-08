@@ -25,28 +25,22 @@ def get_trained_model(data, data_schema, hyper_params):
     # set random seeds
     utils.set_seeds()
     
-
     # print('data shape:',  data.shape)  
         
     # preprocess data
     print("Pre-processing data...")
     data, _, preprocess_pipe = preprocess_data(data, None, data_schema)
-    X, y = data['X'], data['y']
-    
-    
-    # perform train/valid split 
-    train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=model_cfg["valid_split"])
-    
+    train_X, train_y = data['X'], data['y']
     # print('train_X/y shape:',  train_X.shape, train_y.shape)
               
     # Create and train model     
     print('Fitting model ...')  
-    model = train_model(train_X, train_y, valid_X, valid_y, hyper_params, verbose=1)    
+    model = train_model(train_X, train_y, hyper_params)    
     
     return preprocess_pipe, model
 
 
-def train_model(train_X, train_y, valid_X, valid_y, hyper_params, verbose=0):
+def train_model(train_X, train_y, hyper_params):
     # get model hyper-parameters  that are data-dependent (in this case N = num_users, and M = num_items)    
     data_based_params = get_data_based_model_params(train_X) 
     

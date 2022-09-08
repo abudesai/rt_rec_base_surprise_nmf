@@ -117,7 +117,7 @@ def tune_hyperparameters(data, data_schema, num_trials, hyper_param_path, hpt_re
         valid_X, valid_y = valid_data['X'], valid_data['y'].astype(np.float)  
     
         # train model - returns model and history
-        model = model_trainer.train_model(train_X, train_y, None, None, hyperparameters, verbose=1) 
+        model = model_trainer.train_model(train_X, train_y, hyperparameters) 
 
         # evaluate the model
         score = model.evaluate(valid_X, valid_y)  # model tracks mse and mae. mse is at index 0
