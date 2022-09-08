@@ -22,10 +22,11 @@ model_params_fname = "model_params.save"
 
 
 class Recommender:
-    def __init__(self, **kwargs):
+    def __init__(self, n_factors=15, **kwargs):
+        self.n_factors = n_factors
         self.ma = None
         self.mi = None
-        self.model = NMF()
+        self.model = NMF(self.n_factors)
         return
 
     def fit(self, train_X, train_y):
@@ -56,7 +57,9 @@ class Recommender:
 
     def save(self, model_path):        
 
-        model_params = {}
+        model_params = {
+            "n_factors": self.n_factors
+        }
         joblib.dump(model_params, os.path.join(model_path, model_params_fname))
         
         self.model.pu = self.model.pu.base
@@ -64,8 +67,7 @@ class Recommender:
         self.model.bu = self.model.bu.base
         self.model.bi = self.model.bi.base
         
-        # surprise.dump.dump(os.path.join(model_path, model_fname), predictions=None, algo=self.model, verbose=1)
-        surprise.dump.dump(os.path.join(model_path, model_fname), algo=self.model)
+        surprise.dump.dump(os.path.join(model_path, model_fname), predictions=None, algo=self.model, verbose=1)
         np.save(os.path.join(model_path, "lower_bound.npy"), self.mi)
         np.save(os.path.join(model_path, "upper_bound.npy"), self.ma)
 

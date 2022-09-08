@@ -41,9 +41,9 @@ def get_trained_model(data, data_schema, hyper_params):
               
     # Create and train model     
     print('Fitting model ...')  
-    model, history = train_model(train_X, train_y, valid_X, valid_y, hyper_params, verbose=1)    
+    model = train_model(train_X, train_y, valid_X, valid_y, hyper_params, verbose=1)    
     
-    return preprocess_pipe, model, history
+    return preprocess_pipe, model
 
 
 def train_model(train_X, train_y, valid_X, valid_y, hyper_params, verbose=0):
@@ -54,15 +54,14 @@ def train_model(train_X, train_y, valid_X, valid_y, hyper_params, verbose=0):
     # print(model_params)
     
     # Create and train model   
-    model = Recommender(  **model_params )  
-    
+    model = Recommender(  **model_params )      
     # fit model
-    history = model.fit( 
+    model.fit( 
             train_X=train_X, 
             train_y=train_y,
         )  
     
-    return model, history
+    return model
 
 
 def preprocess_data(train_data, valid_data, data_schema):

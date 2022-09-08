@@ -109,7 +109,7 @@ def tune_hyperparameters(data, data_schema, num_trials, hyper_param_path, hpt_re
     @use_named_args(hpt_space)
     def objective(**hyperparameters):
         """Build a model from this hyper parameter permutation and evaluate its performance"""
-        
+        print(hyperparameters)
         # perform train/valid split on the training data 
         train_data, valid_data = train_test_split(data, test_size=model_cfg['valid_split'])    
         train_data, valid_data, _  = model_trainer.preprocess_data(train_data, valid_data, data_schema)   
@@ -117,7 +117,7 @@ def tune_hyperparameters(data, data_schema, num_trials, hyper_param_path, hpt_re
         valid_X, valid_y = valid_data['X'], valid_data['y'].astype(np.float)  
     
         # train model - returns model and history
-        model, _ = model_trainer.train_model(train_X, train_y, None, None, hyperparameters, verbose=1) 
+        model = model_trainer.train_model(train_X, train_y, None, None, hyperparameters, verbose=1) 
 
         # evaluate the model
         score = model.evaluate(valid_X, valid_y)  # model tracks mse and mae. mse is at index 0
