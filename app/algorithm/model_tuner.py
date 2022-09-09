@@ -103,6 +103,12 @@ def tune_hyperparameters(data, data_schema, num_trials, hyper_param_path, hpt_re
     hpt_space = get_hpt_space(hpt_specs)  
     default_hps = get_default_hps(hpt_specs) 
 
+    
+    # perform train/valid split on the training data 
+    train_data, valid_data = train_test_split(data, test_size=model_cfg['valid_split'])    
+    train_data, valid_data, _  = model_trainer.preprocess_data(train_data, valid_data, data_schema)   
+    train_X, train_y = train_data['X'], train_data['y'].astype(np.float)
+    valid_X, valid_y = valid_data['X'], valid_data['y'].astype(np.float)  
             
     
     # Scikit-optimize objective function
@@ -110,11 +116,6 @@ def tune_hyperparameters(data, data_schema, num_trials, hyper_param_path, hpt_re
     def objective(**hyperparameters):
         """Build a model from this hyper parameter permutation and evaluate its performance"""
         print(hyperparameters)
-        # perform train/valid split on the training data 
-        train_data, valid_data = train_test_split(data, test_size=model_cfg['valid_split'])    
-        train_data, valid_data, _  = model_trainer.preprocess_data(train_data, valid_data, data_schema)   
-        train_X, train_y = train_data['X'], train_data['y'].astype(np.float)
-        valid_X, valid_y = valid_data['X'], valid_data['y'].astype(np.float)  
     
         # train model - returns model and history
         model = model_trainer.train_model(train_X, train_y, hyperparameters) 

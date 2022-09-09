@@ -47,7 +47,7 @@ class Recommender:
         testset = test_.build_testset()
         predictions = pd.DataFrame(self.model.test(testset))
         temp2 = pd.merge(test, predictions, left_on=[0, 1], right_on=['uid', 'iid'], how="left")
-        return np.array(temp2.est).reshape(-1, 1)
+        return np.round(np.array(temp2.est).reshape(-1, 1), 4)
 
     def evaluate(self, x_test, y_test):
         """Evaluate the model and return the loss and metrics"""
@@ -55,8 +55,7 @@ class Recommender:
         y_test = np.array(y_test).reshape(-1)
         return np.mean((y_pred - np.array(y_test)) ** 2)
 
-    def save(self, model_path):        
-
+    def save(self, model_path):   
         model_params = {
             "n_factors": self.n_factors
         }
