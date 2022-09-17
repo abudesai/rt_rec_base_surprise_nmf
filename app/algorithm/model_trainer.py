@@ -24,8 +24,6 @@ def get_trained_model(data, data_schema, hyper_params):
     
     # set random seeds
     utils.set_seeds()
-    
-    # print('data shape:',  data.shape)  
         
     # preprocess data
     print("Pre-processing data...")
