@@ -5,4 +5,4 @@ scikit-optimize==0.9.0
 flask==2.0.2
 gunicorn==20.1.0
 matplotlib
-scikit-surprise
+scikit-surprise==1.1.2
